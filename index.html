@@ -210,6 +210,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    object-position: 70% center;
       display: block;
       transition: transform 0.45s ease;
     }
@@ -335,7 +336,7 @@
     .wish-avatar {
       width: 48px;
       height: 48px;
-      border-radius: 50%;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -432,7 +433,7 @@
     .music-btn {
       width: 38px;
       height: 38px;
-      border-radius: 50%;
+      border-radius: 16px;
       border: none;
       background: var(--rose2);
       color: white;
@@ -569,7 +570,7 @@
       height: 18px;
       background: white;
       border: 3px solid var(--rose2);
-      border-radius: 50%;
+      border-radius: 16px;
       box-shadow: 0 0 0 4px rgba(232,160,180,0.18);
     }
 
@@ -596,6 +597,10 @@
     .tl-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 28px rgba(232,160,180,0.22);
+    }
+
+    .tl-card-badge {
+      display: none; /* shown only on mobile */
     }
 
     .tl-emoji { font-size: 1.6rem; margin-bottom: 6px; display: block; }
@@ -649,7 +654,7 @@
 
     .insta-avatar {
       width: 36px; height: 36px;
-      border-radius: 50%;
+      border-radius: 16px;
       background: linear-gradient(135deg, var(--rose), var(--peach2));
       display: flex; align-items: center; justify-content: center;
       font-size: 1.1rem;
@@ -837,7 +842,7 @@
       width: 68px;
       height: 68px;
       font-size: 1.8rem;
-      border-radius: 50%;
+      border-radius: 16px;
       border: 2px solid rgba(232,160,180,0.3);
       background: white;
       cursor: pointer;
@@ -868,17 +873,54 @@
 
     /* ── MOBILE ── */
     @media (max-width: 600px) {
-      .gallery-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: auto; }
-      .gallery-item:nth-child(1) { grid-column: 1/3; grid-row: auto; aspect-ratio: 16/9; }
-      .gallery-item:nth-child(n) { grid-column: auto; grid-row: auto; aspect-ratio: 1; }
-      .tl-item, .tl-item:nth-child(even) { flex-direction: column; padding-left: 30px; }
-      .tl-side, .tl-item:nth-child(even) .tl-side,
-      .tl-item:nth-child(odd) .tl-side  { text-align: left; padding: 0; }
-      .tl-line { left: 9px; }
-      .tl-dot-wrap { left: 9px; }
-      .social-grid { grid-template-columns: 1fr; }
-      .wishwall-board { gap: 12px; }
-      .sticky { width: 140px; }
+      /* Gallery */
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-rows: auto !important;
+        gap: 8px;
+      }
+      .gallery-item {
+        grid-column: auto !important;
+        grid-row: auto !important;
+        aspect-ratio: 1 !important;
+      }
+      .gallery-item:nth-child(1) {
+        grid-column: 1 / 3 !important;
+        aspect-ratio: 4/3 !important;
+      }
+
+      /* Timeline — линия слева, все карточки справа */
+      .tl-wrap { padding-left: 28px; }
+      .tl-line { left: 8px; transform: none; }
+      .tl-item,
+      .tl-item:nth-child(even) {
+        flex-direction: row !important;
+        align-items: flex-start;
+        margin-bottom: 28px;
+      }
+      .tl-item > div[style*="flex:1"],
+      .tl-item:nth-child(even) > div[style*="flex:1"] { display: none !important; }
+      .tl-side,
+      .tl-item:nth-child(even) .tl-side,
+      .tl-item:nth-child(odd) .tl-side {
+        text-align: left !important;
+        padding: 0 !important;
+        flex: 1;
+      }
+      .tl-dot-wrap { position: absolute; left: 0; transform: none; }
+      /* Hide badge in dot-wrap on mobile, show inside card */
+      .tl-dot-wrap .tl-year-badge { display: none; }
+      .tl-card-badge {
+        display: inline-block;
+        background: var(--rose2);
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+      }
     }
   </style>
 </head>
@@ -889,7 +931,7 @@
 
 <!-- ───── HERO ───── -->
 <section id="hero">
-  <div class="hero-ribbon">🌸 Девичник · Для тебя</div>
+  <div class="hero-ribbon">🌸 Для тебя</div>
 
   <div class="hero-script">Жанара</div>
 
@@ -917,7 +959,9 @@
       <div class="gallery-item" onclick="openLightbox(3)"><img src="photo4.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="gallery-placeholder" style="display:none"><span class="ph-emoji">🌹</span><span class="ph-label">photo4.jpg</span></div><div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div></div>
       <div class="gallery-item" onclick="openLightbox(4)"><img src="photo5.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="gallery-placeholder" style="display:none"><span class="ph-emoji">✨</span><span class="ph-label">photo5.jpg</span></div><div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div></div>
       <div class="gallery-item" onclick="openLightbox(5)"><img src="photo6.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="gallery-placeholder" style="display:none"><span class="ph-emoji">💗</span><span class="ph-label">photo6.jpg</span></div><div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div></div>
-      <div class="gallery-item" onclick="openLightbox(6)"><img src="photo7.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="gallery-placeholder" style="display:none"><span class="ph-emoji">🌺</span><span class="ph-label">photo7.jpg</span></div><div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div></div>
+<div class="gallery-item" onclick="openLightbox(7)"><img src="photo9.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="gallery-placeholder" style="display:none"><span class="ph-emoji">💕</span><span class="ph-label">photo9.jpg</span></div><div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div></div>
+      <div class="gallery-item" onclick="openLightbox(8)"><img src="photo10.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="gallery-placeholder" style="display:none"><span class="ph-emoji">🌷</span><span class="ph-label">photo10.jpg</span></div><div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div></div>
+      <div class="gallery-item" onclick="openLightbox(6)"><img src="photo8.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="gallery-placeholder" style="display:none"><span class="ph-emoji">🌸</span><span class="ph-label">photo8.jpg</span></div><div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div></div>
     </div>
 
     <!-- LIGHTBOX -->
@@ -937,7 +981,8 @@
     <div class="message-big">Для тебя, Жанара</div>
     <p class="message-text">
       С самого рождения ты была моей сестрой — и это лучшее, что есть в моей жизни.
-      Ты держала меня за руку, когда я был маленьким, и я знал: пока ты рядом — всё будет хорошо.
+      Ты была всегда рядом, когда я был маленьким — даже когда меня чуть собака не укусила 😄
+      И я знал: пока ты рядом — всё будет хорошо.
       <br /><br />
       Я рос, а ты всегда была где-то впереди — умнее, смелее, добрее.
       Я смотрел на тебя и учился. Учился быть хорошим человеком — просто наблюдая за тобой.
@@ -945,7 +990,7 @@
       Сегодня ты начинаешь новую главу — и я отпускаю тебя с самым большим теплом в сердце.
       Но знай: я всегда твой братишка. Всегда рядом. Всегда за тебя.
       <br /><br />
-      Люблю тебя, апа. Будь счастлива — ты это заслужила больше всех.
+      Люблю тебя, сестра. Будь счастлива — ты это заслужила больше всех.
     </p>
     <p style="margin-top: 32px; font-family: 'Great Vibes', cursive; font-size: 2rem; color: var(--rose2);">— Мирлан</p>
   </div>
@@ -965,7 +1010,7 @@
         <div class="tl-side">
           <div class="tl-card">
             <span class="tl-emoji">👶</span>
-            <div class="tl-title">Появилась на свет</div>
+            <div class="tl-card-badge">Начало</div><div class="tl-title">Появилась на свет</div>
             <div class="tl-desc">В один прекрасный день мир стал немного лучше — родилась Жанара. И всё вокруг засветилось.</div>
           </div>
         </div>
@@ -985,7 +1030,7 @@
         <div class="tl-side">
           <div class="tl-card">
             <span class="tl-emoji">🎒</span>
-            <div class="tl-title">Первый звонок</div>
+            <div class="tl-card-badge">Детство</div><div class="tl-title">Первый звонок</div>
             <div class="tl-desc">Бантики, портфель и море волнения. Маленькая Жанара пошла в школу — и сразу всех покорила.</div>
           </div>
         </div>
@@ -995,8 +1040,8 @@
         <div class="tl-side">
           <div class="tl-card">
             <span class="tl-emoji">🎓</span>
-            <div class="tl-title">Студенческие годы</div>
-            <div class="tl-desc">Новые города, новые мечты, новые друзья. Жанара строила себя — и справилась блестяще.</div>
+            <div class="tl-card-badge">Детство</div><div class="tl-title">Студенческие годы / Детский Сал</div>
+            <div class="tl-desc">Горно-Алтайск — новые знакомства, новые мечты. Ты строила себя — и справляешься блестяще.</div>
           </div>
         </div>
         <div class="tl-dot-wrap">
@@ -1015,7 +1060,7 @@
         <div class="tl-side">
           <div class="tl-card">
             <span class="tl-emoji">💘</span>
-            <div class="tl-title">Встреча с ним</div>
+            <div class="tl-card-badge">Любовь</div><div class="tl-title">Встреча с ним</div>
             <div class="tl-desc">Иногда жизнь сама знает, что делает. Однажды появился он — и всё встало на своё место.</div>
           </div>
         </div>
@@ -1025,7 +1070,7 @@
         <div class="tl-side">
           <div class="tl-card">
             <span class="tl-emoji">💍</span>
-            <div class="tl-title">Предложение</div>
+            <div class="tl-card-badge">Помолвка</div><div class="tl-title">Предложение</div>
             <div class="tl-desc">«Да» — и весь мир узнал об этом первым. Самое короткое и самое важное слово в её жизни.</div>
           </div>
         </div>
@@ -1045,7 +1090,7 @@
         <div class="tl-side">
           <div class="tl-card">
             <span class="tl-emoji">👰</span>
-            <div class="tl-title">Девичник!</div>
+            <div class="tl-card-badge">Сейчас 🌸</div><div class="tl-title">Девичник!</div>
             <div class="tl-desc">Последний вечер как незамужняя — и какой! Окружённая теми, кто любит её больше всего на свете.</div>
           </div>
         </div>
@@ -1080,6 +1125,20 @@
 
 <!-- ───── FOOTER ───── -->
 <footer>
+  <img src="photo7.jpg" alt="" style="
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    object-position: 70% center;
+    border-radius: 16px;
+    border: 4px solid white;
+    box-shadow: 0 6px 28px rgba(232,160,180,0.35);
+    margin-bottom: 24px;
+    margin-top: 48px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  " onerror="this.style.display='none'" />
   <div class="footer-script">Жанара</div>
   <p class="footer-tagline">Мы любим тебя — сегодня, завтра и всегда 🌸</p>
   <div class="footer-flowers">🌸 🌷 💕 🌷 🌸</div>
@@ -1149,7 +1208,7 @@
   }
 
   /* Lightbox */
-  const PHOTOS = ['photo1.jpg','photo2.jpg','photo3.jpg','photo4.jpg','photo5.jpg','photo6.jpg','photo7.jpg'];
+  const PHOTOS = ['photo1.jpg','photo2.jpg','photo3.jpg','photo4.jpg','photo5.jpg','photo6.jpg','photo8.jpg','photo9.jpg','photo10.jpg'];
   let lbIndex = 0;
   function openLightbox(i) {
     lbIndex = i;
